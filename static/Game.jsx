@@ -80,6 +80,7 @@ class Game extends React.Component {
 	  ties: 0,
     };
 	socket.on('click move', (payload) => this.Sockethandleclick(payload['data']['i'], payload['data']['j']));
+	socket.on('reset move', (payload) => this.resetBoard(payload));
     }
   
     Sockethandleclick(i, j) {
@@ -94,58 +95,7 @@ class Game extends React.Component {
       playerTurn: !this.state.playerTurn,
     });
   }
-  //calculates the computers move by generating possible places where X can win and then preventing that, in theory
-  computerMove(){
-	if(calculateWinner(this.state.squares) === 'tie'){
-		return
-	}
-	setTimeout(function(){ 
-	  var squares = JSON.parse(JSON.stringify(this.state.squares));  //source of a previous error, needed to make proper deep copy of array
-	  //basic idea of this loop is simple, we go through, and if it finds a place the player can win, it plays there.  It just prevents your victory, it doesn't actually seek out its own
-	  for(var x = 0; x < squares.length; x++){
-		  for(var y = 0; y < squares[x].length; y++){
-			  
-			  if(squares[x][y] === '-'){
-				  squares[x][y] = 'X';
-				  if(calculateWinner(squares)){ 
-					this.handleClick(x, y);
-					return
-				   }else{
-					squares[x][y] = '-';  
-				  }
-			  }
-		  }
-	  }
-	   
-		this._computerMove();
-		
-		return
-			
-	    
-	  }.bind(this), 750);
-  }
-   //this method kicks in to make a random play if the first computer method fails to take care of things
-  _computerMove(){
-	if(calculateWinner(this.state.squares) === 'tie'){
-		return
-	}
-	setTimeout(function(){ 
-	  var x = Math.floor(Math.random() * 3);
-	  var y = Math.floor(Math.random() * 3);
-	  while( calculateWinner(this.state.squares) === false && this.state.squares[x][y] !== '-'){
-		  x = Math.floor(Math.random() * 3);
-		  y = Math.floor(Math.random() * 3);
-	  }
-	    if(calculateWinner(this.state.squares)){
-			return
-		}
-			
-		this.handleClick(x, y);
-				return
-			
-	    
-	  }.bind(this), 50);
-  }
+  
   resetBoard(){
 	  this.setState({
       squares: [['-', '-', '-'],['-', '-', '-'],['-', '-', '-']]
@@ -198,7 +148,7 @@ class Game extends React.Component {
           <Score playerScore = {this.state.playerScore}
 		         computerScore = {this.state.computerScore}
 				 ties = {this.state.ties}/>
-		  <button onClick={() => this.resetBoard()} >Reset Board </button>
+		  <button onClick={() => socket.emit('reset', {'board':1 });} >Reset Board </button>
         </div>
       </div>
 	</div>

@@ -17,9 +17,11 @@ io.on('connection', (socket) => {
   console.log('a new user connected');
 
 	socket.on('click', function(data) {
-		io.emit('click move', { data });
-		console.log('click');
-  });
+		io.emit('click move', { data });	
+	});
+	socket.on('reset', function(data) {
+		io.emit('reset move', { data });	
+	});
   socket.on('disconnect', () => {
     console.log('user disconnected');
   });
