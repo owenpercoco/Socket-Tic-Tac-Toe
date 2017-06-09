@@ -59,7 +59,7 @@
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
-			value: true
+		value: true
 	});
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -88,304 +88,307 @@
 	var socket = io();
 
 	var Board = function (_React$Component) {
-			_inherits(Board, _React$Component);
+		_inherits(Board, _React$Component);
 
-			function Board() {
-					_classCallCheck(this, Board);
+		function Board() {
+			_classCallCheck(this, Board);
 
-					return _possibleConstructorReturn(this, (Board.__proto__ || Object.getPrototypeOf(Board)).apply(this, arguments));
+			return _possibleConstructorReturn(this, (Board.__proto__ || Object.getPrototypeOf(Board)).apply(this, arguments));
+		}
+
+		_createClass(Board, [{
+			key: 'renderSquare',
+			value: function renderSquare(i, j) {
+				var _this2 = this;
+
+				return _react2.default.createElement(_Square2.default, {
+					value: this.props.squares[i][j],
+					onClick: function onClick() {
+						return _this2.props.onClick(i, j);
+					}
+				});
 			}
+		}, {
+			key: 'render',
+			value: function render() {
+				return _react2.default.createElement(
+					'div',
+					{ className: ' ' },
+					_react2.default.createElement(
+						'div',
+						{ className: 'board-row' },
+						this.renderSquare(0, 0),
+						this.renderSquare(0, 1),
+						this.renderSquare(0, 2)
+					),
+					_react2.default.createElement(
+						'div',
+						{ className: 'board-row' },
+						this.renderSquare(1, 0),
+						this.renderSquare(1, 1),
+						this.renderSquare(1, 2)
+					),
+					_react2.default.createElement(
+						'div',
+						{ className: 'board-row' },
+						this.renderSquare(2, 0),
+						this.renderSquare(2, 1),
+						this.renderSquare(2, 2)
+					)
+				);
+			}
+		}]);
 
-			_createClass(Board, [{
-					key: 'renderSquare',
-					value: function renderSquare(i, j) {
-							var _this2 = this;
-
-							return _react2.default.createElement(_Square2.default, {
-									value: this.props.squares[i][j],
-									onClick: function onClick() {
-											return _this2.props.onClick(i, j);
-									}
-							});
-					}
-			}, {
-					key: 'render',
-					value: function render() {
-							return _react2.default.createElement(
-									'div',
-									{ className: ' ' },
-									_react2.default.createElement(
-											'div',
-											{ className: 'board-row' },
-											this.renderSquare(0, 0),
-											this.renderSquare(0, 1),
-											this.renderSquare(0, 2)
-									),
-									_react2.default.createElement(
-											'div',
-											{ className: 'board-row' },
-											this.renderSquare(1, 0),
-											this.renderSquare(1, 1),
-											this.renderSquare(1, 2)
-									),
-									_react2.default.createElement(
-											'div',
-											{ className: 'board-row' },
-											this.renderSquare(2, 0),
-											this.renderSquare(2, 1),
-											this.renderSquare(2, 2)
-									)
-							);
-					}
-			}]);
-
-			return Board;
+		return Board;
 	}(_react2.default.Component);
 	//generates your scoreboard, adding a nice music note to whoever is winning.  If its tied, its still the computers win, because really if you aren't winning, the computer is.
 
 
 	var Score = function (_React$Component2) {
-			_inherits(Score, _React$Component2);
+		_inherits(Score, _React$Component2);
 
-			function Score() {
-					_classCallCheck(this, Score);
+		function Score() {
+			_classCallCheck(this, Score);
 
-					return _possibleConstructorReturn(this, (Score.__proto__ || Object.getPrototypeOf(Score)).apply(this, arguments));
+			return _possibleConstructorReturn(this, (Score.__proto__ || Object.getPrototypeOf(Score)).apply(this, arguments));
+		}
+
+		_createClass(Score, [{
+			key: 'render',
+			value: function render() {
+				if (this.props.playerScore > this.props.computerScore) {
+					return _react2.default.createElement(
+						'div',
+						null,
+						_react2.default.createElement(
+							'span',
+							{ className: 'winning' },
+							this.props.player_1,
+							': ',
+							this.props.playerScore
+						),
+						_react2.default.createElement(
+							'span',
+							null,
+							this.props.player_2,
+							':  ',
+							this.props.computerScore
+						),
+						_react2.default.createElement(
+							'span',
+							null,
+							'Ties: ',
+							this.props.ties
+						)
+					);
+				} else {
+					return _react2.default.createElement(
+						'div',
+						null,
+						_react2.default.createElement(
+							'span',
+							null,
+							this.props.player_1,
+							': ',
+							this.props.playerScore
+						),
+						_react2.default.createElement(
+							'span',
+							{ className: 'winning' },
+							this.props.player_2,
+							':  ',
+							this.props.computerScore
+						),
+						_react2.default.createElement(
+							'span',
+							null,
+							'Ties: ',
+							this.props.ties
+						)
+					);
+				}
 			}
+		}]);
 
-			_createClass(Score, [{
-					key: 'render',
-					value: function render() {
-							if (this.props.playerScore > this.props.computerScore) {
-									return _react2.default.createElement(
-											'div',
-											null,
-											_react2.default.createElement(
-													'span',
-													{ className: 'winning' },
-													this.props.player_1,
-													': ',
-													this.props.playerScore
-											),
-											_react2.default.createElement(
-													'span',
-													null,
-													this.props.player_2,
-													':  ',
-													this.props.computerScore
-											),
-											_react2.default.createElement(
-													'span',
-													null,
-													'Ties: ',
-													this.props.ties
-											)
-									);
-							} else {
-									return _react2.default.createElement(
-											'div',
-											null,
-											_react2.default.createElement(
-													'span',
-													null,
-													this.props.player_1,
-													': ',
-													this.props.playerScore
-											),
-											_react2.default.createElement(
-													'span',
-													{ className: 'winning' },
-													this.props.player_2,
-													':  ',
-													this.props.computerScore
-											),
-											_react2.default.createElement(
-													'span',
-													null,
-													'Ties: ',
-													this.props.ties
-											)
-									);
-							}
-					}
-			}]);
-
-			return Score;
+		return Score;
 	}(_react2.default.Component);
 
 	var Game = function (_React$Component3) {
-			_inherits(Game, _React$Component3);
+		_inherits(Game, _React$Component3);
 
-			function Game() {
-					_classCallCheck(this, Game);
+		function Game() {
+			_classCallCheck(this, Game);
 
-					var _this4 = _possibleConstructorReturn(this, (Game.__proto__ || Object.getPrototypeOf(Game)).call(this));
+			var _this4 = _possibleConstructorReturn(this, (Game.__proto__ || Object.getPrototypeOf(Game)).call(this));
 
-					_this4.state = {
-							squares: [['-', '-', '-'], ['-', '-', '-'], ['-', '-', '-']],
-							playerTurn: true,
-							playerScore: 0,
-							computerScore: 0,
-							ties: 0,
-							player_1: 'player one',
-							player_2: 'player two'
-					};
-					socket.on('click move', function (payload) {
-							return _this4.Sockethandleclick(payload['data']['i'], payload['data']['j']);
+			_this4.state = {
+				squares: [['-', '-', '-'], ['-', '-', '-'], ['-', '-', '-']],
+				playerTurn: true,
+				playerScore: 0,
+				computerScore: 0,
+				ties: 0,
+				player_1: 'player one',
+				player_2: 'player two'
+			};
+			socket.on('click move', function (payload) {
+				return _this4.Sockethandleclick(payload['data']['i'], payload['data']['j']);
+			});
+			socket.on('reset move', function (payload) {
+				return _this4.resetBoard(payload);
+			});
+			socket.on('naming change', function (payload) {
+				return _this4.namingChange(payload);
+			});
+			return _this4;
+		}
+
+		_createClass(Game, [{
+			key: 'namingChange',
+			value: function namingChange(data) {
+				console.log(data['data']['name']);
+				if (this.state.playerTurn === true) {
+					this.setState({
+						player_1: data['data']['name']
 					});
-					socket.on('reset move', function (payload) {
-							return _this4.resetBoard(payload);
+				} else {
+					this.setState({
+						player_2: data['data']['name']
 					});
-					socket.on('naming change', function (payload) {
-							return _this4.namingChange(payload);
-					});
-					return _this4;
+				}
 			}
+		}, {
+			key: 'updateNameEmit',
+			value: function updateNameEmit(event) {
+				console.log(event.target.value);
+				socket.emit('name change', { 'name': event.target.value });
+			}
+		}, {
+			key: 'Sockethandleclick',
+			value: function Sockethandleclick(i, j) {
 
-			_createClass(Game, [{
-					key: 'namingChange',
-					value: function namingChange(data) {
-							console.log(data['data']['name']);
-							if (this.state.playerTurn === true) {
-									this.setState({
-											player_1: data['data']['name']
-									});
-							} else {
-									this.setState({
-											player_2: data['data']['name']
-									});
-							}
-					}
-			}, {
-					key: 'updateNameEmit',
-					value: function updateNameEmit(event) {
-							console.log(event.target.value);
-							socket.emit('name change', { 'name': event.target.value });
-					}
-			}, {
-					key: 'Sockethandleclick',
-					value: function Sockethandleclick(i, j) {
+				var squares = this.state.squares.slice();
+				if (calculateWinner(this.state.squares) || this.state.squares[i][j] !== '-') {
+					return;
+				}
+				squares[i][j] = this.state.playerTurn ? 'X' : 'O';
+				this.setState({
+					squares: squares,
+					playerTurn: !this.state.playerTurn
+				});
+			}
+		}, {
+			key: 'resetBoard',
+			value: function resetBoard() {
+				this.setState({
+					squares: [['-', '-', '-'], ['-', '-', '-'], ['-', '-', '-']]
+				});
+			}
+		}, {
+			key: 'handleClick',
+			value: function handleClick(i, j) {
+				socket.emit('click', { 'i': i, 'j': j });
+			}
+		}, {
+			key: 'resetBoard',
+			value: function resetBoard() {
+				this.setState({
+					squares: [['-', '-', '-'], ['-', '-', '-'], ['-', '-', '-']]
+				});
+			}
+		}, {
+			key: 'render',
+			value: function render() {
+				var _this5 = this;
 
-							var squares = this.state.squares.slice();
-							if (calculateWinner(this.state.squares) || this.state.squares[i][j] !== '-') {
-									return;
-							}
-							squares[i][j] = this.state.playerTurn ? 'X' : 'O';
-							this.setState({
-									squares: squares,
-									playerTurn: !this.state.playerTurn
-							});
+				var winner = calculateWinner(this.state.squares, this.state.playerTurn);
+				var status = void 0;
+				if (winner) {
+					if (winner === 'tie') {
+						this.state.ties += 1;
+					} else {
+						this.state.playerTurn ? this.state.computerScore += 1 : this.state.playerScore += 1; //im mutating state directly here and above, it throws a warning.  Will fix
 					}
-			}, {
-					key: 'resetBoard',
-					value: function resetBoard() {
-							this.setState({
-									squares: [['-', '-', '-'], ['-', '-', '-'], ['-', '-', '-']]
-							});
-					}
-			}, {
-					key: 'handleClick',
-					value: function handleClick(i, j) {
-							socket.emit('click', { 'i': i, 'j': j });
-					}
-			}, {
-					key: 'resetBoard',
-					value: function resetBoard() {
-							this.setState({
-									squares: [['-', '-', '-'], ['-', '-', '-'], ['-', '-', '-']]
-							});
-					}
-			}, {
-					key: 'render',
-					value: function render() {
-							var _this5 = this;
 
-							var winner = calculateWinner(this.state.squares, this.state.playerTurn);
-							var status = void 0;
-							if (winner) {
-									if (winner === 'tie') {
-											this.state.ties += 1;
-									} else {
-											this.state.playerTurn ? this.state.computerScore += 1 : this.state.playerScore += 1; //im mutating state directly here and above, it throws a warning.  Will fix
-									}
-
-									status = winner;
-							} else {
-									status = this.state.playerTurn ? 'X turn' : 'O turn';
-							}
-							return _react2.default.createElement(
+					status = winner;
+				} else {
+					status = this.state.playerTurn ? 'X turn' : 'O turn';
+				}
+				return _react2.default.createElement(
+					'div',
+					{ className: 'row' },
+					_react2.default.createElement(
+						'div',
+						{ className: 'row' },
+						_react2.default.createElement(
+							'form',
+							null,
+							_react2.default.createElement(
+								'div',
+								{ className: 'form-group' },
+								_react2.default.createElement(
+									'label',
+									null,
+									'Name:',
+									_react2.default.createElement('input', { className: 'form-control', type: 'text', value: this.state.value, onChange: this.updateNameEmit })
+								)
+							)
+						)
+					),
+					_react2.default.createElement(
+						'div',
+						{ className: 'game' },
+						_react2.default.createElement(
+							'div',
+							{ className: 'row' },
+							_react2.default.createElement(
+								'div',
+								{ className: 'col-md-12' },
+								_react2.default.createElement(
 									'div',
-									{ className: 'row' },
-									_react2.default.createElement(
-											'div',
-											{ className: 'row' },
-											_react2.default.createElement(
-													'form',
-													{ onSubmit: this.handleSubmit },
-													_react2.default.createElement(
-															'label',
-															null,
-															'Name:',
-															_react2.default.createElement('input', { type: 'text', value: this.state.value, onChange: this.updateNameEmit })
-													),
-													_react2.default.createElement('input', { type: 'submit', value: 'Submit' })
-											)
-									),
-									_react2.default.createElement(
-											'div',
-											{ className: 'game' },
-											_react2.default.createElement(
-													'div',
-													{ className: 'row' },
-													_react2.default.createElement(
-															'div',
-															{ className: 'col-md-12' },
-															_react2.default.createElement(
-																	'div',
-																	{ className: 'status' },
-																	status
-															)
-													)
-											),
-											_react2.default.createElement(
-													'div',
-													{ className: 'row' },
-													_react2.default.createElement(
-															'div',
-															{ className: 'game-board' },
-															_react2.default.createElement(Board, { squares: this.state.squares,
-																	onClick: function onClick(i, j) {
-																			return _this5.handleClick(i, j);
-																	}
-															})
-													)
-											)
-									),
-									_react2.default.createElement(
-											'div',
-											{ className: 'row' },
-											_react2.default.createElement(
-													'div',
-													{ className: 'game-info' },
-													_react2.default.createElement(Score, { playerScore: this.state.playerScore,
-															computerScore: this.state.computerScore,
-															ties: this.state.ties,
-															player_1: this.state.player_1,
-															player_2: this.state.player_2 }),
-													_react2.default.createElement(
-															'button',
-															{ onClick: function onClick() {
-																			return socket.emit('reset', { 'board': 1 });
-																	} },
-															'Reset Board '
-													)
-											)
-									)
-							);
-					}
-			}]);
+									{ className: 'status' },
+									status
+								)
+							)
+						),
+						_react2.default.createElement(
+							'div',
+							{ className: 'row' },
+							_react2.default.createElement(
+								'div',
+								{ className: 'game-board' },
+								_react2.default.createElement(Board, { squares: this.state.squares,
+									onClick: function onClick(i, j) {
+										return _this5.handleClick(i, j);
+									}
+								})
+							)
+						)
+					),
+					_react2.default.createElement(
+						'div',
+						{ className: 'row' },
+						_react2.default.createElement(
+							'div',
+							{ className: 'game-info' },
+							_react2.default.createElement(Score, { playerScore: this.state.playerScore,
+								computerScore: this.state.computerScore,
+								ties: this.state.ties,
+								player_1: this.state.player_1,
+								player_2: this.state.player_2 }),
+							_react2.default.createElement(
+								'button',
+								{ onClick: function onClick() {
+										return socket.emit('reset', { 'board': 1 });
+									} },
+								'Reset Board '
+							)
+						)
+					)
+				);
+			}
+		}]);
 
-			return Game;
+		return Game;
 	}(_react2.default.Component);
 
 	// ========================================
@@ -394,32 +397,32 @@
 	//helper method, calculates the game winner, or returns false if no one has clinched it yet
 	function calculateWinner(squares, player) {
 
-			var status = player ? 'O wins!' : 'X wins!';
-			if (squares[0][0] === squares[1][1] && squares[0][0] === squares[2][2] && squares[0][0] !== '-') {
-					return status;
-			} else if (squares[0][2] === squares[1][1] && squares[1][1] === squares[2][0] && squares[2][0] !== '-') {
-					return status;
+		var status = player ? 'O wins!' : 'X wins!';
+		if (squares[0][0] === squares[1][1] && squares[0][0] === squares[2][2] && squares[0][0] !== '-') {
+			return status;
+		} else if (squares[0][2] === squares[1][1] && squares[1][1] === squares[2][0] && squares[2][0] !== '-') {
+			return status;
+		}
+		for (var i = 0; i < squares.length; i++) {
+			if (squares[i][0] === squares[i][1] && squares[i][1] === squares[i][2] && squares[i][1] !== '-') {
+				return status;
 			}
-			for (var i = 0; i < squares.length; i++) {
-					if (squares[i][0] === squares[i][1] && squares[i][1] === squares[i][2] && squares[i][1] !== '-') {
-							return status;
-					}
-					if (squares[0][i] === squares[1][i] && squares[1][i] === squares[2][i] && squares[0][i] !== '-') {
-							return status;
-					}
+			if (squares[0][i] === squares[1][i] && squares[1][i] === squares[2][i] && squares[0][i] !== '-') {
+				return status;
 			}
-			var spaces = false;
-			for (i = 0; i < squares.length; i++) {
-					for (var j = 0; j < squares[i].length; j++) {
-							if (squares[i][j] === '-') {
-									spaces = true;
-							}
-					}
+		}
+		var spaces = false;
+		for (i = 0; i < squares.length; i++) {
+			for (var j = 0; j < squares[i].length; j++) {
+				if (squares[i][j] === '-') {
+					spaces = true;
+				}
 			}
-			if (spaces === false) {
-					return 'tie';
-			}
-			return false;
+		}
+		if (spaces === false) {
+			return 'tie';
+		}
+		return false;
 	}
 
 	exports.default = Game;

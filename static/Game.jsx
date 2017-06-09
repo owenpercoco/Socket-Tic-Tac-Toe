@@ -150,12 +150,13 @@ class Game extends React.Component {
     return (
 	<div className="row">
 	<div className="row">
-	<form onSubmit={this.handleSubmit}>
-        <label>
-          Name:
-          <input type="text" value={this.state.value} onChange={this.updateNameEmit} />
-        </label>
-        <input type="submit" value="Submit" />
+	<form>
+		<div className="form-group">
+			<label>
+			  Name:
+			  <input className="form-control" type="text" value={this.state.value} onChange={this.updateNameEmit} />
+			</label>
+		</div>
     </form>
 	</div>
       <div className="game">
