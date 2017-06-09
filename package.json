@@ -1,0 +1,33 @@
+{
+  "name": "React-Socket-Tic-Tac-Toe",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "babel":{
+	"presets": ["es2015", "react"]
+  },
+  "dependencies": {
+    "body-parser": "^1.13.3",
+    "express": "^4.15.3",
+    "react": "^15.5.4",
+    "react-dom": "^15.5.4",
+    "socket.io": "^1.7.4",
+    "twilio": "^2.3.0"
+  },
+  "engines": {
+    "node": "6.10.3",
+    "npm": "3.10.10"
+  },
+  "devDependencies": {
+    "babel-core": "^6.24.1",
+    "babel-loader": "^6.4.1",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-react": "^6.24.1",
+    "webpack": "^1.15.0",
+    "webpack-dev-server": "^1.16.5"
+  },
+  "scripts": {
+    "start": "webpack && node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}

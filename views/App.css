@@ -1,0 +1,76 @@
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  animation: App-logo-spin infinite 20s linear;
+  height: 80px;
+}
+
+.App-header {
+  background-color: #222;
+  height: 150px;
+  padding: 20px;
+  color: white;
+}
+
+.App-intro {
+  font-size: large;
+}
+
+@keyframes App-logo-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+body{
+	background: #CFF7F9;
+}
+.O{
+	color:#031926 !important;
+}
+
+.X{
+	color: #FF715B !important; 
+}
+.status{
+	padding:25px;
+	font-size:20px;
+	text-transform:uppercase;
+	font-weight:900;
+}
+.square{
+	-webkit-transition-duration: .5s; /* Safari */
+    transition-duration: .5s;
+	height: 100px;
+    width: 100px;
+    border: 2px solid #77ACA2;
+    background: white;
+    border-radius: 10px;
+    padding: 5px;
+}
+.board-value{
+	font-size:38px;
+	display:inherit;
+	color:white;
+}
+.board-row{
+	height:100px;
+}
+.game-info{
+	padding:25px;
+	font-size:25px;
+	text-transform:uppercase;
+}
+.game-info span{	
+	display:block;
+}
+.winning:after{
+   content: '\f001';
+   color: #FF715B;
+   font-family: FontAwesome;
+   font-weight: normal;
+   font-style: normal;
+   margin:0px 0px 0px 10px;
+   text-decoration:none;
+
+} 
