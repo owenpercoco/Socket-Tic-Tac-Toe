@@ -48,16 +48,16 @@ class Score extends React.Component{
 	  if (this.props.playerScore > this.props.computerScore){
 		return(
 		  <div>
-			  <span  className="winning">Player: {this.props.playerScore}</span>
-			  <span>Computer:  {this.props.computerScore}</span>
+			  <span  className="winning">X: {this.props.playerScore}</span>
+			  <span>O:  {this.props.computerScore}</span>
 			  <span>Ties: {this.props.ties}</span>
 		  </div>
 	  )  
 	  }else{
 		  return(
 		  <div>
-			  <span>Player: {this.props.playerScore}</span>
-			  <span className="winning">Computer:  {this.props.computerScore}</span>
+			  <span>X: {this.props.playerScore}</span>
+			  <span className="winning">O:  {this.props.computerScore}</span>
 			  <span>Ties: {this.props.ties}</span>
 		  </div>
 	  )
@@ -125,7 +125,7 @@ class Game extends React.Component {
       status = winner;
 	  
     } else {
-      status = (this.state.playerTurn ? 'Player turn' : '...thinking');
+      status = (this.state.playerTurn ? 'X turn' : 'O turn');
     }
     return (
 	<div className="row">
@@ -148,7 +148,7 @@ class Game extends React.Component {
           <Score playerScore = {this.state.playerScore}
 		         computerScore = {this.state.computerScore}
 				 ties = {this.state.ties}/>
-		  <button onClick={() => socket.emit('reset', {'board':1 });} >Reset Board </button>
+		  <button onClick={() => socket.emit('reset', {'board':1 })} >Reset Board </button>
         </div>
       </div>
 	</div>
@@ -165,7 +165,7 @@ ReactDOM.render(
 //helper method, calculates the game winner, or returns false if no one has clinched it yet
 function calculateWinner(squares, player) {
 	
-	  var status = (player ? 'better luck next time' : 'You won!');
+	  var status = (player ? 'O wins!' : 'X wins!');
 	  if (squares[0][0] === squares[1][1] && squares[0][0] === squares[2][2] && squares[0][0] !== '-') {
 			return status;
 	  }else if (squares[0][2] === squares[1][1] && squares[1][1] === squares[2][0] && squares[2][0] !== '-') {
