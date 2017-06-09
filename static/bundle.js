@@ -163,13 +163,15 @@
 											_react2.default.createElement(
 													'span',
 													{ className: 'winning' },
-													'Player: ',
+													this.props.player_1,
+													': ',
 													this.props.playerScore
 											),
 											_react2.default.createElement(
 													'span',
 													null,
-													'Computer:  ',
+													this.props.player_2,
+													':  ',
 													this.props.computerScore
 											),
 											_react2.default.createElement(
@@ -186,13 +188,15 @@
 											_react2.default.createElement(
 													'span',
 													null,
-													'Player: ',
+													this.props.player_1,
+													': ',
 													this.props.playerScore
 											),
 											_react2.default.createElement(
 													'span',
 													{ className: 'winning' },
-													'Computer:  ',
+													this.props.player_2,
+													':  ',
 													this.props.computerScore
 											),
 											_react2.default.createElement(
@@ -222,7 +226,9 @@
 							playerTurn: true,
 							playerScore: 0,
 							computerScore: 0,
-							ties: 0
+							ties: 0,
+							player_1: 'player one',
+							player_2: 'player two'
 					};
 					socket.on('click move', function (payload) {
 							return _this4.Sockethandleclick(payload['data']['i'], payload['data']['j']);
@@ -230,10 +236,33 @@
 					socket.on('reset move', function (payload) {
 							return _this4.resetBoard(payload);
 					});
+					socket.on('naming change', function (payload) {
+							return _this4.namingChange(payload);
+					});
 					return _this4;
 			}
 
 			_createClass(Game, [{
+					key: 'namingChange',
+					value: function namingChange(data) {
+							console.log(data['data']['name']);
+							if (this.state.playerTurn === true) {
+									this.setState({
+											player_1: data['data']['name']
+									});
+							} else {
+									this.setState({
+											player_2: data['data']['name']
+									});
+							}
+					}
+			}, {
+					key: 'updateNameEmit',
+					value: function updateNameEmit(event) {
+							console.log(event.target.value);
+							socket.emit('name change', { 'name': event.target.value });
+					}
+			}, {
 					key: 'Sockethandleclick',
 					value: function Sockethandleclick(i, j) {
 
@@ -289,6 +318,21 @@
 									{ className: 'row' },
 									_react2.default.createElement(
 											'div',
+											{ className: 'row' },
+											_react2.default.createElement(
+													'form',
+													{ onSubmit: this.handleSubmit },
+													_react2.default.createElement(
+															'label',
+															null,
+															'Name:',
+															_react2.default.createElement('input', { type: 'text', value: this.state.value, onChange: this.updateNameEmit })
+													),
+													_react2.default.createElement('input', { type: 'submit', value: 'Submit' })
+											)
+									),
+									_react2.default.createElement(
+											'div',
 											{ className: 'game' },
 											_react2.default.createElement(
 													'div',
@@ -325,7 +369,9 @@
 													{ className: 'game-info' },
 													_react2.default.createElement(Score, { playerScore: this.state.playerScore,
 															computerScore: this.state.computerScore,
-															ties: this.state.ties }),
+															ties: this.state.ties,
+															player_1: this.state.player_1,
+															player_2: this.state.player_2 }),
 													_react2.default.createElement(
 															'button',
 															{ onClick: function onClick() {

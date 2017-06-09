@@ -48,16 +48,16 @@ class Score extends React.Component{
 	  if (this.props.playerScore > this.props.computerScore){
 		return(
 		  <div>
-			  <span  className="winning">X: {this.props.playerScore}</span>
-			  <span>O:  {this.props.computerScore}</span>
+			  <span  className="winning">{this.props.player_1}: {this.props.playerScore}</span>
+			  <span>{this.props.player_2}:  {this.props.computerScore}</span>
 			  <span>Ties: {this.props.ties}</span>
 		  </div>
 	  )  
 	  }else{
 		  return(
 		  <div>
-			  <span>X: {this.props.playerScore}</span>
-			  <span className="winning">O:  {this.props.computerScore}</span>
+			  <span>{this.props.player_1}: {this.props.playerScore}</span>
+			  <span className="winning">{this.props.player_2}:  {this.props.computerScore}</span>
 			  <span>Ties: {this.props.ties}</span>
 		  </div>
 	  )
@@ -78,11 +78,31 @@ class Game extends React.Component {
 	  playerScore: 0,
 	  computerScore: 0,
 	  ties: 0,
+	  player_1: 'player one',
+	  player_2: 'player two'
     };
 	socket.on('click move', (payload) => this.Sockethandleclick(payload['data']['i'], payload['data']['j']));
 	socket.on('reset move', (payload) => this.resetBoard(payload));
+	socket.on('naming change', (payload) => this.namingChange(payload));
     }
-  
+	namingChange(data){
+		console.log(data['data']['name']);
+		if (this.state.playerTurn === true){
+			this.setState({
+				player_1:data['data']['name']
+			});
+		}else{
+			this.setState({
+				player_2:data['data']['name']
+			});
+		}
+		
+	}
+	updateNameEmit(event){
+		console.log(event.target.value);
+		socket.emit('name change', {'name':event.target.value})
+
+	}
     Sockethandleclick(i, j) {
     
     const squares = this.state.squares.slice();
@@ -129,6 +149,15 @@ class Game extends React.Component {
     }
     return (
 	<div className="row">
+	<div className="row">
+	<form onSubmit={this.handleSubmit}>
+        <label>
+          Name:
+          <input type="text" value={this.state.value} onChange={this.updateNameEmit} />
+        </label>
+        <input type="submit" value="Submit" />
+    </form>
+	</div>
       <div className="game">
 	  <div className="row">
 	    <div className="col-md-12">
@@ -147,7 +176,9 @@ class Game extends React.Component {
         <div className="game-info">
           <Score playerScore = {this.state.playerScore}
 		         computerScore = {this.state.computerScore}
-				 ties = {this.state.ties}/>
+				 ties = {this.state.ties}
+				 player_1={this.state.player_1}
+				 player_2={this.state.player_2}/>
 		  <button onClick={() => socket.emit('reset', {'board':1 })} >Reset Board </button>
         </div>
       </div>

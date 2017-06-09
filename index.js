@@ -22,6 +22,9 @@ io.on('connection', (socket) => {
 	socket.on('reset', function(data) {
 		io.emit('reset move', { data });	
 	});
+	socket.on('name change', function(data) {
+		io.emit('naming change', { data });	
+	});
   socket.on('disconnect', () => {
     console.log('user disconnected');
   });
