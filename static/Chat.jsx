@@ -1,4 +1,5 @@
 import React from 'react';
+import { CSSTransitionGroup } from 'react-transition-group';
 const io = require('socket.io-client');
 
 
@@ -38,24 +39,25 @@ class Chat extends React.Component {
 	var _class;
 	var messageBoxStyle ={
 		height: '400px',
-		background: 'white',
-		border: '3px solid #77aca2',
-		borderRadius: '8px',
-		padding: '10px',
-		overflowY: 'scroll'
+		overflowY: 'hidden',
+		overflowX: 'hidden',
+		marginBottom:'10px'
 	};
+	const items = this.state.messages.map((item, i) => (
+				 <li key={i}>
+					<span className="message-content">{item[1]}</span>
+					<span className="message-name">{item[0]}</span>
+				</li>
+		));
     return (
       <div id="chat-box">
 	  <div className="message-area" style={messageBoxStyle}>
 		<ol className="messages-list">
-		{
-			  this.state.messages.map(function(item, i){
-			  return <li key={i}>
-						<span className="message-content">{item[1]}</span>
-						<span className="message-name">{item[0]}</span>
-					</li>
-				})
-		}
+			<CSSTransitionGroup transitionName = "example"
+						  transitionEnterTimeout={500}
+						  transitionLeaveTimeout={300}>
+							  {items}
+			</CSSTransitionGroup >
 		</ol>
 	  </div>
 	  

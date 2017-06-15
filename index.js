@@ -33,10 +33,14 @@ io.on('connection', (socket) => {
 	socket.on('message sent', function(data) {
 		var arr=[data['name'], data['message']];
 		messages.push(arr);
+		while(messages.length > 7){
+			messages.shift()
+		}
 		io.emit('messages update', { messages });	
 	});
   socket.on('disconnect', () => {
     console.log('user disconnected');
+	player = player - 1;
   });
 });
 
