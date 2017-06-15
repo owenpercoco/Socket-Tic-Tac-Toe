@@ -11,11 +11,14 @@ const server = app.listen(process.env.PORT || 3000, () => {
 const io = require('socket.io')(server);
 
 app.use(express.static('static'));
-
+var player = 0;
 // Set socket.io listeners.
 io.on('connection', (socket) => {
-  console.log('a new user connected');
 
+  console.log('a new user connected');
+  io.emit('signed on', { player });
+  player = player + 1;
+  console.log(player);
 	socket.on('click', function(data) {
 		io.emit('click move', { data });	
 	});
