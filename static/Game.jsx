@@ -98,7 +98,6 @@ class Game extends React.Component {
 		}
 	}
 	namingChange(data){
-		console.log(data['data']);
 		if (data['data']['player'] === 1){
 			this.setState({
 				player_1:data['data']['name']
@@ -173,6 +172,8 @@ class Game extends React.Component {
     } else {
       status = (this.state.playerTurn ? 'Your turn' : 'their turn');
     }
+	
+	var name = this.state.player ==1 ? this.state.player_1 : this.state.player_2;  //im mutating state directly here and above, it throws a warning.  Will fix
     return (
 	<div className="row">
 		<div className="col-md-4">
@@ -184,7 +185,10 @@ class Game extends React.Component {
 					</label>
 				</div>
 			</form>
-			CHAT AREA
+			<Chat
+			 name = {name}
+			 socket = {socket}
+			/>
 		</div>
 	<div className="col-md-8">
 		<div className="game">

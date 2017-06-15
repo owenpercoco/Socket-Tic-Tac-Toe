@@ -12,12 +12,14 @@ const io = require('socket.io')(server);
 
 app.use(express.static('static'));
 var player = 0;
+var messages = [];
 // Set socket.io listeners.
 io.on('connection', (socket) => {
 
   console.log('a new user connected');
   io.emit('signed on', { player });
   player = player + 1;
+  io.emit('messages update', { messages });
   console.log(player);
 	socket.on('click', function(data) {
 		io.emit('click move', { data });	
@@ -27,6 +29,11 @@ io.on('connection', (socket) => {
 	});
 	socket.on('name change', function(data) {
 		io.emit('naming change', { data });	
+	});
+	socket.on('message sent', function(data) {
+		var arr=[data['name'], data['message']];
+		messages.push(arr);
+		io.emit('messages update', { messages });	
 	});
   socket.on('disconnect', () => {
     console.log('user disconnected');
