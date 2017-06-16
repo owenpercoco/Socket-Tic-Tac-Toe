@@ -190,7 +190,7 @@ class Game extends React.Component {
 			 socket = {socket}
 			/>
 		</div>
-	<div className="col-md-8">
+	<div className="col-md-8 text-center">
 		<div className="game">
 		  <div className="row">
 			<div className="col-md-12">
