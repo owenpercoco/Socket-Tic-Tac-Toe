@@ -76,7 +76,7 @@
 
 	var _Square2 = _interopRequireDefault(_Square);
 
-	var _Chat = __webpack_require__(184);
+	var _Chat = __webpack_require__(200);
 
 	var _Chat2 = _interopRequireDefault(_Chat);
 
@@ -22235,7 +22235,7 @@
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
-	  value: true
+			value: true
 	});
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -22243,6 +22243,8 @@
 	var _react = __webpack_require__(2);
 
 	var _react2 = _interopRequireDefault(_react);
+
+	var _reactTransitionGroup = __webpack_require__(184);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -22253,35 +22255,41 @@
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 	var Square = function (_React$Component) {
-	  _inherits(Square, _React$Component);
+			_inherits(Square, _React$Component);
 
-	  function Square() {
-	    _classCallCheck(this, Square);
+			function Square() {
+					_classCallCheck(this, Square);
 
-	    return _possibleConstructorReturn(this, (Square.__proto__ || Object.getPrototypeOf(Square)).apply(this, arguments));
-	  }
+					return _possibleConstructorReturn(this, (Square.__proto__ || Object.getPrototypeOf(Square)).apply(this, arguments));
+			}
 
-	  _createClass(Square, [{
-	    key: 'render',
-	    value: function render() {
-	      var _this2 = this;
+			_createClass(Square, [{
+					key: 'render',
+					value: function render() {
+							var _this2 = this;
 
-	      var _class = 'board-value ' + this.props.value;
-	      return _react2.default.createElement(
-	        'button',
-	        { className: 'square', onClick: function onClick() {
-	            return _this2.props.onClick();
-	          } },
-	        _react2.default.createElement(
-	          'span',
-	          { className: _class },
-	          this.props.value
-	        )
-	      );
-	    }
-	  }]);
+							var _class = 'board-value ' + this.props.value;
+							return _react2.default.createElement(
+									'button',
+									{ className: 'square', onClick: function onClick() {
+													return _this2.props.onClick();
+											} },
+									_react2.default.createElement(
+											_reactTransitionGroup.CSSTransitionGroup,
+											{ transitionName: 'example',
+													transitionEnterTimeout: 500,
+													transitionLeaveTimeout: 300 },
+											_react2.default.createElement(
+													'span',
+													{ className: _class },
+													this.props.value
+											)
+									)
+							);
+					}
+			}]);
 
-	  return Square;
+			return Square;
 	}(_react2.default.Component);
 
 	exports.default = Square;
@@ -22292,151 +22300,11 @@
 
 	'use strict';
 
-	Object.defineProperty(exports, "__esModule", {
-		value: true
-	});
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	var _react = __webpack_require__(2);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _reactTransitionGroup = __webpack_require__(185);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var io = __webpack_require__(201);
-
-	var Chat = function (_React$Component) {
-		_inherits(Chat, _React$Component);
-
-		function Chat(props) {
-			_classCallCheck(this, Chat);
-
-			var _this = _possibleConstructorReturn(this, (Chat.__proto__ || Object.getPrototypeOf(Chat)).call(this, props));
-
-			_this.state = {
-				messages: [],
-				value: ''
-			};
-			var socket = _this.props.socket;
-			_this.handleSubmit = _this.handleSubmit.bind(_this);
-			_this.handleChange = _this.handleChange.bind(_this);
-			socket.on('messages update', function (payload) {
-				return _this.updateMessages(payload['messages']);
-			});
-			return _this;
-		}
-
-		_createClass(Chat, [{
-			key: 'componentDidMount',
-			value: function componentDidMount() {}
-		}, {
-			key: 'updateMessages',
-			value: function updateMessages(data) {
-				this.setState({
-					messages: data
-				});
-			}
-		}, {
-			key: 'handleChange',
-			value: function handleChange(event) {
-				this.setState({ value: event.target.value });
-			}
-		}, {
-			key: 'handleSubmit',
-			value: function handleSubmit(event) {
-				event.preventDefault();
-				this.props.socket.emit('message sent', { 'message': this.state.value, 'name': this.props.name });
-				this.setState({
-					value: ""
-				});
-			}
-		}, {
-			key: 'render',
-			value: function render() {
-				var _class;
-				var messageBoxStyle = {
-					height: '400px',
-					overflowY: 'hidden',
-					overflowX: 'hidden',
-					marginBottom: '10px'
-				};
-				var items = this.state.messages.map(function (item, i) {
-					return _react2.default.createElement(
-						'li',
-						{ key: i },
-						_react2.default.createElement(
-							'span',
-							{ className: 'message-content' },
-							item[1]
-						),
-						_react2.default.createElement(
-							'span',
-							{ className: 'message-name' },
-							item[0]
-						)
-					);
-				});
-				return _react2.default.createElement(
-					'div',
-					{ id: 'chat-box' },
-					_react2.default.createElement(
-						'div',
-						{ className: 'message-area', style: messageBoxStyle },
-						_react2.default.createElement(
-							'ol',
-							{ className: 'messages-list' },
-							_react2.default.createElement(
-								_reactTransitionGroup.CSSTransitionGroup,
-								{ transitionName: 'example',
-									transitionEnterTimeout: 500,
-									transitionLeaveTimeout: 300 },
-								items
-							)
-						)
-					),
-					_react2.default.createElement(
-						'form',
-						{ onSubmit: this.handleSubmit },
-						_react2.default.createElement(
-							'div',
-							{ className: 'form-group' },
-							_react2.default.createElement(
-								'label',
-								{ className: 'message-label' },
-								_react2.default.createElement('input', { className: 'form-control', type: 'text', value: this.state.value, onChange: this.handleChange })
-							),
-							_react2.default.createElement('input', { type: 'submit', value: 'submit' })
-						)
-					)
-				);
-			}
-		}]);
-
-		return Chat;
-	}(_react2.default.Component);
-
-	exports.default = Chat;
-
-/***/ }),
-/* 185 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var _CSSTransitionGroup = __webpack_require__(186);
+	var _CSSTransitionGroup = __webpack_require__(185);
 
 	var _CSSTransitionGroup2 = _interopRequireDefault(_CSSTransitionGroup);
 
-	var _TransitionGroup = __webpack_require__(189);
+	var _TransitionGroup = __webpack_require__(188);
 
 	var _TransitionGroup2 = _interopRequireDefault(_TransitionGroup);
 
@@ -22448,7 +22316,7 @@
 	};
 
 /***/ }),
-/* 186 */
+/* 185 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
@@ -22461,19 +22329,19 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _propTypes = __webpack_require__(187);
+	var _propTypes = __webpack_require__(186);
 
 	var _propTypes2 = _interopRequireDefault(_propTypes);
 
-	var _TransitionGroup = __webpack_require__(189);
+	var _TransitionGroup = __webpack_require__(188);
 
 	var _TransitionGroup2 = _interopRequireDefault(_TransitionGroup);
 
-	var _CSSTransitionGroupChild = __webpack_require__(193);
+	var _CSSTransitionGroupChild = __webpack_require__(192);
 
 	var _CSSTransitionGroupChild2 = _interopRequireDefault(_CSSTransitionGroupChild);
 
-	var _PropTypes = __webpack_require__(200);
+	var _PropTypes = __webpack_require__(199);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -22548,7 +22416,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
 
 /***/ }),
-/* 187 */
+/* 186 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -22579,13 +22447,13 @@
 	} else {
 	  // By explicitly using `prop-types` you are opting into new production behavior.
 	  // http://fb.me/prop-types-in-prod
-	  module.exports = __webpack_require__(188)();
+	  module.exports = __webpack_require__(187)();
 	}
 
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
 
 /***/ }),
-/* 188 */
+/* 187 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/**
@@ -22650,7 +22518,7 @@
 
 
 /***/ }),
-/* 189 */
+/* 188 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
@@ -22659,7 +22527,7 @@
 
 	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
-	var _chainFunction = __webpack_require__(190);
+	var _chainFunction = __webpack_require__(189);
 
 	var _chainFunction2 = _interopRequireDefault(_chainFunction);
 
@@ -22667,15 +22535,15 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _propTypes = __webpack_require__(187);
+	var _propTypes = __webpack_require__(186);
 
 	var _propTypes2 = _interopRequireDefault(_propTypes);
 
-	var _warning = __webpack_require__(191);
+	var _warning = __webpack_require__(190);
 
 	var _warning2 = _interopRequireDefault(_warning);
 
-	var _ChildMapping = __webpack_require__(192);
+	var _ChildMapping = __webpack_require__(191);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -22925,7 +22793,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
 
 /***/ }),
-/* 190 */
+/* 189 */
 /***/ (function(module, exports) {
 
 	
@@ -22951,7 +22819,7 @@
 
 
 /***/ }),
-/* 191 */
+/* 190 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -23018,7 +22886,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
 
 /***/ }),
-/* 192 */
+/* 191 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -23114,7 +22982,7 @@
 	}
 
 /***/ }),
-/* 193 */
+/* 192 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
@@ -23123,31 +22991,31 @@
 
 	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
-	var _addClass = __webpack_require__(194);
+	var _addClass = __webpack_require__(193);
 
 	var _addClass2 = _interopRequireDefault(_addClass);
 
-	var _removeClass = __webpack_require__(196);
+	var _removeClass = __webpack_require__(195);
 
 	var _removeClass2 = _interopRequireDefault(_removeClass);
 
-	var _requestAnimationFrame = __webpack_require__(197);
+	var _requestAnimationFrame = __webpack_require__(196);
 
 	var _requestAnimationFrame2 = _interopRequireDefault(_requestAnimationFrame);
 
-	var _properties = __webpack_require__(199);
+	var _properties = __webpack_require__(198);
 
 	var _react = __webpack_require__(2);
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _propTypes = __webpack_require__(187);
+	var _propTypes = __webpack_require__(186);
 
 	var _propTypes2 = _interopRequireDefault(_propTypes);
 
 	var _reactDom = __webpack_require__(37);
 
-	var _PropTypes = __webpack_require__(200);
+	var _PropTypes = __webpack_require__(199);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -23349,7 +23217,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
 
 /***/ }),
-/* 194 */
+/* 193 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -23359,7 +23227,7 @@
 	});
 	exports.default = addClass;
 
-	var _hasClass = __webpack_require__(195);
+	var _hasClass = __webpack_require__(194);
 
 	var _hasClass2 = _interopRequireDefault(_hasClass);
 
@@ -23371,7 +23239,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 195 */
+/* 194 */
 /***/ (function(module, exports) {
 
 	"use strict";
@@ -23386,7 +23254,7 @@
 	module.exports = exports["default"];
 
 /***/ }),
-/* 196 */
+/* 195 */
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -23396,7 +23264,7 @@
 	};
 
 /***/ }),
-/* 197 */
+/* 196 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -23405,7 +23273,7 @@
 	  value: true
 	});
 
-	var _inDOM = __webpack_require__(198);
+	var _inDOM = __webpack_require__(197);
 
 	var _inDOM2 = _interopRequireDefault(_inDOM);
 
@@ -23454,7 +23322,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 198 */
+/* 197 */
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -23466,7 +23334,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 199 */
+/* 198 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -23476,7 +23344,7 @@
 	});
 	exports.animationEnd = exports.animationDelay = exports.animationTiming = exports.animationDuration = exports.animationName = exports.transitionEnd = exports.transitionDuration = exports.transitionDelay = exports.transitionTiming = exports.transitionProperty = exports.transform = undefined;
 
-	var _inDOM = __webpack_require__(198);
+	var _inDOM = __webpack_require__(197);
 
 	var _inDOM2 = _interopRequireDefault(_inDOM);
 
@@ -23581,7 +23449,7 @@
 	}
 
 /***/ }),
-/* 200 */
+/* 199 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -23594,7 +23462,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _propTypes = __webpack_require__(187);
+	var _propTypes = __webpack_require__(186);
 
 	var _propTypes2 = _interopRequireDefault(_propTypes);
 
@@ -23633,6 +23501,161 @@
 	  appear: _propTypes2.default.string,
 	  appearActive: _propTypes2.default.string
 	})]);
+
+/***/ }),
+/* 200 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(2);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactTransitionGroup = __webpack_require__(184);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var io = __webpack_require__(201);
+
+	var Chat = function (_React$Component) {
+		_inherits(Chat, _React$Component);
+
+		function Chat(props) {
+			_classCallCheck(this, Chat);
+
+			var _this = _possibleConstructorReturn(this, (Chat.__proto__ || Object.getPrototypeOf(Chat)).call(this, props));
+
+			_this.state = {
+				messages: [],
+				value: ''
+			};
+			var socket = _this.props.socket;
+			_this.handleSubmit = _this.handleSubmit.bind(_this);
+			_this.handleChange = _this.handleChange.bind(_this);
+			socket.on('messages update', function (payload) {
+				return _this.updateMessages(payload['messages']);
+			});
+			return _this;
+		}
+
+		_createClass(Chat, [{
+			key: 'componentDidMount',
+			value: function componentDidMount() {}
+		}, {
+			key: 'updateMessages',
+			value: function updateMessages(data) {
+				while (data.length > 7) {
+					data.shift();
+				}
+				if (data.length - this.state.messages.length > 1) {
+					var new_data = [];
+
+					for (var i = 0; i < data.length; i++) {
+						new_data[i] = data[i];
+						console.log(data[i]);
+						this.setState({
+							messages: new_data
+						});
+					}
+				} else {
+					this.setState({
+						messages: data
+					});
+				}
+			}
+		}, {
+			key: 'handleChange',
+			value: function handleChange(event) {
+				this.setState({ value: event.target.value });
+			}
+		}, {
+			key: 'handleSubmit',
+			value: function handleSubmit(event) {
+				event.preventDefault();
+				this.props.socket.emit('message sent', { 'message': this.state.value, 'name': this.props.name });
+				this.setState({
+					value: ""
+				});
+			}
+		}, {
+			key: 'render',
+			value: function render() {
+				var _class;
+				var messageBoxStyle = {
+					height: '400px',
+					overflowY: 'hidden',
+					overflowX: 'hidden',
+					marginBottom: '10px'
+				};
+				var items = this.state.messages.map(function (item, i) {
+					return _react2.default.createElement(
+						'li',
+						{ key: i },
+						_react2.default.createElement(
+							'span',
+							{ className: 'message-content' },
+							item[1]
+						),
+						_react2.default.createElement(
+							'span',
+							{ className: 'message-name' },
+							item[0]
+						)
+					);
+				});
+				return _react2.default.createElement(
+					'div',
+					{ id: 'chat-box' },
+					_react2.default.createElement(
+						'div',
+						{ className: 'message-area', style: messageBoxStyle },
+						_react2.default.createElement(
+							'ol',
+							{ className: 'messages-list' },
+							_react2.default.createElement(
+								_reactTransitionGroup.CSSTransitionGroup,
+								{ transitionName: 'example',
+									transitionEnterTimeout: 500,
+									transitionLeaveTimeout: 300 },
+								items
+							)
+						)
+					),
+					_react2.default.createElement(
+						'form',
+						{ onSubmit: this.handleSubmit },
+						_react2.default.createElement(
+							'div',
+							{ className: 'form-group' },
+							_react2.default.createElement(
+								'label',
+								{ className: 'message-label' },
+								_react2.default.createElement('input', { className: 'form-control', type: 'text', value: this.state.value, onChange: this.handleChange })
+							),
+							_react2.default.createElement('input', { type: 'submit', value: 'submit' })
+						)
+					)
+				);
+			}
+		}]);
+
+		return Chat;
+	}(_react2.default.Component);
+
+	exports.default = Chat;
 
 /***/ }),
 /* 201 */

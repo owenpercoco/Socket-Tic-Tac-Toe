@@ -20,16 +20,33 @@ class Chat extends React.Component {
 		
 	}
 	updateMessages(data){
-		this.setState({
-			messages: data
-		})
+		while(data.length > 7){
+			data.shift()
+		}
+		if(data.length - this.state.messages.length > 1){
+			var new_data = [];
+			
+				for(var i = 0; i < data.length; i++){
+					new_data[i] = data[i];
+					console.log(data[i]);
+					this.setState({
+						messages: new_data
+					});
+				}
+			
+		}else{
+			this.setState({
+				messages: data
+			})
+		}
+
 	}
 	handleChange(event) {
     this.setState({value: event.target.value});
 	}
 	handleSubmit(event){
 		event.preventDefault();
-		this.props.socket.emit('message sent', {'message':this.state.value, 'name':this.props.name})
+		this.props.socket.emit('message sent', {'message':this.state.value, 'name':this.props.name});
 		this.setState({
 			value: ""
 		})
